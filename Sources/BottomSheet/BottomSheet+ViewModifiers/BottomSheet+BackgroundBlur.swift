@@ -18,8 +18,35 @@ public extension BottomSheet {
     ///   - bool: A boolean whether the option is enabled.
     ///
     /// - Returns: A view that has a blur layer below the BottomSheet.
-    func enableBackgroundBlur(_ bool: Bool = true) -> BottomSheet {
+    func enableBackdrop(_ bool: Bool = true) -> BottomSheet {
         self.configuration.isBackgroundBlurEnabled = bool
+        return self
+    }
+    
+    
+    /// Adds a fullscreen blur layer below the BottomSheet.
+    ///
+    /// The opacity of the layer is proportional to the height of the BottomSheet.
+    ///
+    /// - Parameters:
+    ///   - customView: Custom view that should be presented
+    ///
+    /// - Returns: A view that has a configured blur layer below the BottomSheet.
+    func backdrop(_ backdropView: BottomSheetBlurBackground) -> BottomSheet {
+        self.configuration.backdropView = backdropView
+        return self
+    }
+    
+    /// Adds a fullscreen blur layer below the BottomSheet.
+    ///
+    /// The opacity of the layer is proportional to the height of the BottomSheet.
+    ///
+    /// - Parameters:
+    ///   - customView: Custom view that should be presented
+    ///
+    /// - Returns: A view that has a configured blur layer below the BottomSheet.
+    func backdropClick(_ click: @escaping () -> Void) -> BottomSheet {
+        self.configuration.backdropClick = click
         return self
     }
     
@@ -33,8 +60,8 @@ public extension BottomSheet {
     ///   - startPoint: StartPoint of the background blur relative to the current bottomSheetPosition
     ///
     /// - Returns: A view that has a configured blur layer below the BottomSheet.
-    func backgroundBlurStartPoint(_ startPoint: BottomSheetPosition?) -> BottomSheet {
-        self.configuration.backgroundBlurStartPoint = startPoint
+    func backdropStartPoint(_ startPoint: BottomSheetPosition?) -> BottomSheet {
+        self.configuration.backdropStartPoint = startPoint
         return self
     }
     

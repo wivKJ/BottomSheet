@@ -10,24 +10,38 @@ import Combine
 
 internal extension BottomSheetView {
     func fullScreenBackground(with geometry: GeometryProxy) -> some View {
-        VisualEffectView(visualEffect: self.configuration.backgroundBlurMaterial)
-            .opacity(
-                // When `backgroundBlur` is enabled the opacity is calculated
-                // based on the current height of the BottomSheet relative to its maximum height
-                // Otherwise it is 0
-                self.opacity(with: geometry)
-            )
-        // Make the background fill the whole screen including safe area
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+        let backgroundView: AnyView
+
+        switch configuration.backdropView {
+            case .color(let color):
+                backgroundView = AnyView(color)
+
+            case .custom(let view):
+                backgroundView = view
+
+            default:
+                backgroundView = AnyView(
+                    VisualEffectView(
+                        visualEffect: configuration.backgroundBlurMaterial
+                    )
+                )
+        }
+
+        return backgroundView
+            .opacity(self.opacity(with: geometry))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
-        // Make the background tap-able for `tapToDismiss`
             .contentShape(Rectangle())
-            .allowsHitTesting(self.configuration.isTapToDismissEnabled)
-            .onTapGesture(perform: self.tapToDismissAction)
-        // Make the background transition via opacity
+            .allowsHitTesting(configuration.isTapToDismissEnabled)
+            /*.onTapGesture {
+                if(self.opacity(with: geometry) > 0) {
+                    configuration.backdropClick?()
+                }
+
+                if configuration.isTapToDismissEnabled {
+                    tapToDismissAction()
+                }
+            }*/
             .transition(.opacity)
     }
     

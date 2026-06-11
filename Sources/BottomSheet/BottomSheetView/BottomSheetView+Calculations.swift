@@ -201,31 +201,22 @@ internal extension BottomSheetView {
         guard configuration.isBackgroundBlurEnabled else { return 0 }
 
         let height = self.height(with: geometry)
+        let minHeight = CGFloat(0)
         let maxHeight = self.maxBottomSheetHeight(with: geometry)
-        
-        let current = self.currentBottomSheetHeight(with: geometry)
 
-        guard maxHeight > 0 else { return 0 }
+        guard maxHeight > minHeight else { return 0 }
 
-        let progress = height / maxHeight
-        let start = configuration.backgroundBlurStartPoint?.asScreenHeight(with: maxHeight) ?? 0
+        let progress = (height - minHeight) / (maxHeight - minHeight)
 
-        // no blur before state threshold
-        if progress <= start {
-            return 0
-        }
+        let startHeight = configuration.backdropStartPoint?.asScreenHeight(with: maxHeight) ?? 0
 
-        // full blur after max
-        if progress >= 1 {
-            return 1
-        }
+        let start = (startHeight - minHeight) / (maxHeight - minHeight)
 
-        // normalize from start → 1
+        if progress <= start { return 0 }
+        if progress >= 1 { return 1 }
+
         return (progress - start) / (1 - start)
     }
-    
-    
-    
     
     // For `tapToDismiss`
     func tapToDismissAction() {
