@@ -32,7 +32,7 @@ internal extension BottomSheetView {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
             .contentShape(Rectangle())
-            .allowsHitTesting(configuration.isTapToDismissEnabled || configuration.backdropClick != nil)
+            .allowsHitTesting(configuration.isTapToDismissEnabled || (configuration.backdropClick != nil && self.opacity(with: geometry) > 0))
             .onTapGesture {
                 if(self.opacity(with: geometry) > 0) {
                     configuration.backdropClick?()
