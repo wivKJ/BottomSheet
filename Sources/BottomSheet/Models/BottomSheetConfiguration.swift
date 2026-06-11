@@ -15,6 +15,7 @@ internal class BottomSheetConfiguration: Equatable {
     ) -> Bool {
         return lhs.animation == rhs.animation &&
         lhs.backgroundBlurMaterial == rhs.backgroundBlurMaterial &&
+        lhs.backgroundBlurStartPoint == rhs.backgroundBlurStartPoint &&
         lhs.backgroundViewID == rhs.backgroundViewID &&
         lhs.dragIndicatorColor == rhs.dragIndicatorColor &&
         lhs.isAppleScrollBehaviorEnabled == rhs.isAppleScrollBehaviorEnabled &&
@@ -37,6 +38,7 @@ internal class BottomSheetConfiguration: Equatable {
         blendDuration: 1
     )
     var backgroundBlurMaterial: VisualEffect = .system
+    var backgroundBlurStartPoint: BottomSheetPosition?
     var backgroundViewID: UUID?
     var backgroundView: AnyView?
     var dragIndicatorAction: ((GeometryProxy) -> Void)?
