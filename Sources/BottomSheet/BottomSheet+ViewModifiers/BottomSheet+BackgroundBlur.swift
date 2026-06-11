@@ -23,6 +23,22 @@ public extension BottomSheet {
         return self
     }
     
+    
+    /// Adds a fullscreen blur layer below the BottomSheet.
+    ///
+    /// The opacity of the layer is proportional to the height of the BottomSheet.
+    /// The material can be changed using the `.backgroundBlurMaterial()` modifier.
+    ///
+    /// - Parameters:
+    ///   - startPoint: StartPoint of the background blur relative to the current bottomSheetPosition
+    ///
+    /// - Returns: A view that has a configured blur layer below the BottomSheet.
+    func backgroundBlurStartPoint(_ startPoint: BottomSheetPosition?) -> BottomSheet {
+        self.configuration.backgroundBlurStartPoint = startPoint
+        return self
+    }
+    
+    
     /// Changes the material of the blur layer.
     ///
     /// Changing the material does not affect whether the blur layer is shown.
