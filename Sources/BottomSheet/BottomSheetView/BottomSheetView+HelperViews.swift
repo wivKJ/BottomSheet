@@ -32,8 +32,8 @@ internal extension BottomSheetView {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .edgesIgnoringSafeArea(.all)
             .contentShape(Rectangle())
-            .allowsHitTesting(configuration.isTapToDismissEnabled)
-            /*.onTapGesture {
+            .allowsHitTesting(configuration.isTapToDismissEnabled || configuration.backdropClick != nil)
+            .onTapGesture {
                 if(self.opacity(with: geometry) > 0) {
                     configuration.backdropClick?()
                 }
@@ -41,7 +41,7 @@ internal extension BottomSheetView {
                 if configuration.isTapToDismissEnabled {
                     tapToDismissAction()
                 }
-            }*/
+            }
             .transition(.opacity)
     }
     
@@ -196,7 +196,7 @@ internal extension BottomSheetView {
                 self.mainContent
                 // Make the main content drag-able if content drag is enabled
                 // highPriorityGesture is required to make dragging the bottom sheet work even when user starts dragging on buttons or other pressable items
-                    .highPriorityGesture(
+                    .gesture(
                         self.configuration.isContentDragEnabled && self.configuration.isResizable ?
                         self.dragGesture(with: geometry) : nil
                     )
